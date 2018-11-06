@@ -56,6 +56,11 @@
                         "name": "subnet-iot-hub",
                         "addressPrefix": "10.174.8.32/28",
                         "nsgName": "nsg-iot-hub"
+                    },
+                    {
+                        "name": "subnet-jumpbox",
+                        "addressPrefix": "10.174.8.80/28",
+                        "nsgName": "nsg-jumpbox"
                     }
                 ]
             }
@@ -79,7 +84,7 @@
             "value": "MyS3re@tPassw0rd"
         },
         "iotHubName": {
-            "value": "myiothub001"
+            "value": "myiothub0001"
         },
         "availibilitySets": {
             "value": [
@@ -166,7 +171,7 @@
                     },
                     {
                         "comment": "Studio Experience Server",
-                        "vmName": "vm-experience-svr",
+                        "vmName": "vm-exp-svr",
                         "vmSize": "Standard_DS2_v2",
                         "publicIPAddress": "false",
                         "availabilitySet": "",
@@ -175,7 +180,7 @@
                     },
                     {
                         "comment": "Studio Analytics Server",
-                        "vmName": "vm-analytics-svr",
+                        "vmName": "vm-analytics",
                         "vmSize": "Standard_DS2_v2",
                         "publicIPAddress": "false",
                         "availabilitySet": "",

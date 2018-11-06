@@ -37,9 +37,9 @@
                         "nsgName": "nsg-iot-hub"
                     },
                     {
-                        "name": "subnet-iot-hub",
-                        "addressPrefix": "10.174.8.32/28",
-                        "nsgName": "nsg-iot-hub"
+                        "name": "subnet-jumpbox",
+                        "addressPrefix": "10.174.8.80/28",
+                        "nsgName": "nsg-jumpbox"
                     }
                 ]
             }

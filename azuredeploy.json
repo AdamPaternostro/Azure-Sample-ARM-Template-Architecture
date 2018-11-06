@@ -72,7 +72,7 @@
         },
         "iotHubName": {
             "type": "string",
-            "defaultValue": "myiothub001",
+            "defaultValue": "myiothub0001",
             "metadata": {
                 "description": "The IOT account name"
             }

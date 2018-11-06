@@ -79,7 +79,7 @@
                     },
                     {
                         "comment": "Studio Experience Server",
-                        "vmName": "vm-experience-svr",
+                        "vmName": "vm-exp-svr",
                         "vmSize": "Standard_DS2_v2",
                         "publicIPAddress": "false",
                         "availabilitySet": "",
@@ -88,7 +88,7 @@
                     },
                     {
                         "comment": "Studio Analytics Server",
-                        "vmName": "vm-analytics-svr",
+                        "vmName": "vm-analytics",
                         "vmSize": "Standard_DS2_v2",
                         "publicIPAddress": "false",
                         "availabilitySet": "",
