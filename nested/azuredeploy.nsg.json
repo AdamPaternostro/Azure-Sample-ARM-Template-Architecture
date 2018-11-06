@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "nsgParam": {
+            "type": "object"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[parameters('nsgParam').nsgConfig[copyIndex()].name]",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2018-03-01",
+            "properties": {},
+            "copy": {
+                "name": "nsgcopy",
+                "count": "[length(parameters('nsgParam').nsgConfig)]"
+            }
+        }
+    ],
+    "outputs": {}
+}

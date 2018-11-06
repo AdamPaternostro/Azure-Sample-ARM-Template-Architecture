@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmParam": {
+            "type": "object"
+        },
+        "storageAccountName": {
+            "type": "string"
+        },
+        "vnetName": {
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "condition": "[equals(parameters('vmParam').vmConfig[copyIndex()].publicIPAddress, 'true')]",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[concat(parameters('vmParam').vmConfig[copyIndex()].vmName,'-PublicIP')]",
+            "apiVersion": "2018-02-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4
+            },
+            "copy": {
+                "name": "publicIPCopy",
+                "count": "[length(parameters('vmParam').vmConfig)]"
+            },
+            "dependsOn": []
+        }
+    ],
+    "outputs": {}
+}

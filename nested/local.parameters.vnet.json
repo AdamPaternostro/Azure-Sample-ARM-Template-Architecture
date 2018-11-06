@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnetName": {
+            "value": "myVirtualNetwork"
+        },
+        "vnetAddressPrefix": {
+            "value": "10.174.8.0/24"
+        },
+        "subnetParam": {
+            "value": {
+                "subnetConfig": [
+                    {
+                        "name": "subnet-app-gateway",
+                        "addressPrefix": "10.174.8.0/29",
+                        "nsgName": "nsg-app-gateway"
+                    },
+                    {
+                        "name": "subnet-connection-server",
+                        "addressPrefix": "10.174.8.16/28",
+                        "nsgName": "nsg-connection-server"
+                    },
+                    {
+                        "name": "subnet-zookeeper",
+                        "addressPrefix": "10.174.8.64/28",
+                        "nsgName": "nsg-platform"
+                    },
+                    {
+                        "name": "subnet-platform",
+                        "addressPrefix": "10.174.8.48/28",
+                        "nsgName": "nsg-platform"
+                    },
+                    {
+                        "name": "subnet-iot-hub",
+                        "addressPrefix": "10.174.8.32/28",
+                        "nsgName": "nsg-iot-hub"
+                    },
+                    {
+                        "name": "subnet-iot-hub",
+                        "addressPrefix": "10.174.8.32/28",
+                        "nsgName": "nsg-iot-hub"
+                    }
+                ]
+            }
+        }
+    }
+}

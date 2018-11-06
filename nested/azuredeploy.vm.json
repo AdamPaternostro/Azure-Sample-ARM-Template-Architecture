@@ -1,0 +1,76 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmParam": {
+            "type": "object"
+        },
+        "storageAccountName": {
+            "type": "string"
+        },
+        "vnetName": {
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('vmParam').vmConfig[copyIndex()].vmName]",
+            "apiVersion": "2017-12-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "availabilitySet": "[if(equals(parameters('vmParam').vmConfig[copyIndex()].availabilitySet, ''), json('null'), json(concat('{ \"id\" : \"',resourceId('Microsoft.Compute/availabilitySets', parameters('vmParam').vmConfig[copyIndex()].availabilitySet), '\" }') ))]",
+                "hardwareProfile": {
+                    "vmSize": "[parameters('vmParam').vmConfig[copyIndex()].vmSize]"
+                },
+                "osProfile": {
+                    "computerName": "[parameters('vmParam').vmConfig[copyIndex()].vmName]",
+                    "adminUsername": "[parameters('vmParam').adminLogin]",
+                    "adminPassword": "[parameters('vmParam').adminPassword]",
+                    "windowsConfiguration": {
+                        "provisionVMAgent": true,
+                        "enableAutomaticUpdates": true
+                    }
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "[parameters('vmParam').publisher]",
+                        "offer": "[parameters('vmParam').offer]",
+                        "sku": "[parameters('vmParam').sku]",
+                        "version": "[parameters('vmParam').version]"
+                    },
+                    "osDisk": {
+                        "osType": "Windows",
+                        "name": "[concat(parameters('vmParam').vmConfig[copyIndex()].vmName,'-OS-Disk')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS"
+                        },
+                        "diskSizeGB": 128
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmParam').vmConfig[copyIndex()].vmName,'-NIC'))]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[concat('https', '://', parameters('storageAccountName'), '.blob.core.windows.net', '/')]"
+                    }
+                }
+            },
+            "copy": {
+                "name": "vmCopy",
+                "count": "[length(parameters('vmParam').vmConfig)]"
+            },
+            "dependsOn": []
+        }
+    ],
+    "outputs": {}
+}

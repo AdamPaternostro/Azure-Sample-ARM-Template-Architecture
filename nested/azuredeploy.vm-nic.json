@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmParam": {
+            "type": "object"
+        },
+        "storageAccountName": {
+            "type": "string"
+        },
+        "vnetName": {
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[concat(parameters('vmParam').vmConfig[copyIndex()].vmName,'-NIC')]",
+            "apiVersion": "2018-02-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "[concat(parameters('vmParam').vmConfig[copyIndex()].vmName,'-NIC-IPConfig')]",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": "[if(equals(parameters('vmParam').vmConfig[copyIndex()].publicIPAddress, 'true'), json(concat('{ \"id\" : \"',resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('vmParam').vmConfig[copyIndex()].vmName,'-PublicIP')), '\" }')), json('null'))]",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName')), '/subnets/', parameters('vmParam').vmConfig[copyIndex()].subnet)]"
+                            },
+                            "primary": true,
+                            "privateIPAddressVersion": "IPv4"
+                        }
+                    }
+                ],
+                "enableAcceleratedNetworking": true,
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('vmParam').vmConfig[copyIndex()].nsg)]"
+                },
+                "primary": true
+            },
+            "copy": {
+                "name": "publicNICCopy",
+                "count": "[length(parameters('vmParam').vmConfig)]"
+            },
+            "dependsOn": []
+        }
+    ],
+    "outputs": {}
+}
