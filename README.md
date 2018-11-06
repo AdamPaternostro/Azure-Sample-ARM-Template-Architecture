@@ -1,5 +1,6 @@
 # Azure-Sample-ARM-Template-Architecture
-Shows how to build a set of linked templates with conditions, loops, array and complex parameters.  The templates have been developed as a set of nested templates that allows for team colloborattion on the templates.  You can author and test each linked (nested) template individually and then after succuessfuly testing, incorporate the temaptle into the master template.  This template allows for the parameters files to the updated to add new VMs, subnets and nsgs.
+Shows how to build a set of linked templates with conditions, loops, array and complex parameters.  The templates have been developed as a set of nested templates that allows for team collaboration on the templates.  You can author and test each linked (nested) template individually and then after successfully testing, incorporate the template into the master template.  This template allows for the parameters files to the updated to add new VMs, subnets and nsgs.
+
 
 ## How to run
 * Download azuredeploy.parameters.json
@@ -26,6 +27,12 @@ The below diagram shows the layout of the templates.  The templates have been ne
    *  The publicIPAddress parameter can be set to true or false which determines if the NIC card is assigned a public IP address.  Conditions are used in the ARM template to achive this.
    *  The VM template uses just a single parameter file which is shared between the NIC, Public IPs and the VMs.  This simplified some testing.
 *  The VNET template does a loop to create each subnet.  The subnets cannot be placed in a seperate linked template since when you run the ARM template a second time it will fail.  The VNET will attempt to remove all the subnets when the subnets are in a seperate template.
+
+
+### Examples
+* azuredeploy.availabilityset uses the copy command to create many exact copies
+* azuredeploy.vm-nic uses an "if" statement to conditionally create a sub-resource (or null out the JSON)
+* azuredeploy.vnet uses a copy command for a sub-resource
 
 
 ## To Run via command line (Linux)
