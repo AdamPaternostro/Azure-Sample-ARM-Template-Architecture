@@ -66,6 +66,35 @@ az group deployment create \
 az group delete --name $resourceGroup
 ```
 
+
+## To Run via command line (Powersehll)
+```
+# Login
+Connect-AzAccount
+
+# Select Subscription
+$subscriptionId="REPLACE_ME"
+$context = Get-AzSubscription -SubscriptionId $subscriptionId
+Set-AzContext $context
+
+# Script parameters
+$resourceGroup="Azure-Sample-ARM-Template-Architecture"
+$location="eastus"
+$today=(Get-Date).ToString('yyyy-MM-dd-HH-mm-ss')
+$deploymentName="MyDeployment-$today"
+
+# Create resource group
+New-AzResourceGroup -Name $resourceGroup -Location $location
+
+# Deploy the ARM template
+New-AzResourceGroupDeployment -Name $deploymentName -ResourceGroupName $resourceGroup -TemplateFile azuredeploy.json -TemplateParameterFile parameters.parameters.json -Mode Incremental
+
+# Clean up resource group
+Remove-AzResourceGroup -Name $resourceGroup 
+```
+
+
+
 ## References
 * Each Azure Resource Reference: https://docs.microsoft.com/en-us/azure/templates/
 * Quickstart templates: https://github.com/Azure/azure-quickstart-templates
