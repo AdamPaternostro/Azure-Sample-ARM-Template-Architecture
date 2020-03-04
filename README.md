@@ -87,7 +87,7 @@ $deploymentName="MyDeployment-$today"
 New-AzResourceGroup -Name $resourceGroup -Location $location
 
 # Deploy the ARM template
-New-AzResourceGroupDeployment -Name $deploymentName -ResourceGroupName $resourceGroup -TemplateFile azuredeploy.json -TemplateParameterFile parameters.parameters.json -Mode Incremental
+New-AzResourceGroupDeployment -Name $deploymentName -ResourceGroupName $resourceGroup -TemplateFile azuredeploy.json -TemplateParameterFile azuredeploy.parameters.json -Mode Incremental
 
 # Clean up resource group
 Remove-AzResourceGroup -Name $resourceGroup 
