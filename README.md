@@ -1,5 +1,5 @@
 # Azure-Sample-ARM-Template-Architecture
-Shows how to build a set of linked templates with conditions, loops, array and complex parameters.  The templates have been developed as a set of nested templates that allows for team collaboration on the templates.  You can author and test each linked (nested) template individually and then after successfully testing, incorporate the template into the master template.  This template allows for the parameters files to the updated to add new VMs, subnets and nsgs.
+Shows how to build a set of linked templates with conditions, loops, array and complex parameters.  The templates have been developed as a set of nested templates that allows for team collaboration on the templates (having one large template get very hard to manage).  You can author and test each linked (nested) template individually and then after successfully testing, incorporate the template into the master template.  This template allows for the parameters files to the updated to add new VMs, subnets and nsgs.
 
 
 ## How to run
@@ -8,6 +8,12 @@ Shows how to build a set of linked templates with conditions, loops, array and c
 * Click the Deploy to Azure button
 * Click "Edit Parameters" and upload your azuredeploy.parameters.json
 
+## Running from a GiHub Repo
+If you will be keeping these scripts in your GitHub repo you can still used linked ARM templates.  Azure needs to reach out to a public URL to download/include a linked template.  If your GitHub is not public (and most enterprises are not), then you need a proxy to call which will securely download your template.  I wrote a proxy which is an Azure function to perform such a task. The Function will  login to your GitHub and transmit the ARM template securely to Azure.
+
+https://github.com/AdamPaternostro/GitHub-Azure-Function-Proxy-for-ARM-Template
+
+NOTE: If you are using Azure DevOps or another source control, you just need to emulate the Azure Function code for your source control repository of choice.
 
 ## Actions
 <a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fadampaternostro%2FAzure-Sample-ARM-Template-Architecture%2Fmaster%2Fazuredeploy.json" target="_blank"><img src="http://armviz.io/visualizebutton.png"/></a>
